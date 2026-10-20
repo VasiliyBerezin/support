@@ -68,6 +68,7 @@ footer { font-family: var(--mono); font-size: 12px; color: var(--muted); }
     <section class="slip">
       <div class="top"><div class="name">PayPal</div><div class="tag" data-t="ppTag"></div></div>
       <div class="val">@vasyaberezin</div>
+      <div class="qr" id="qr-pp"></div>
       <div class="row">
         <a class="btn red" href="https://www.paypal.com/paypalme/vasyaberezin" target="_blank" rel="noopener" data-t="ppSend"></a>
         <button class="btn ghost" data-copy="@vasyaberezin" data-t="copy"></button>
@@ -162,10 +163,15 @@ document.querySelectorAll('[data-copy]').forEach(b => {
     try { navigator.clipboard.writeText(b.dataset.copy).then(ok, fallback); } catch (e) { fallback(); }
   });
 });
-try {
-  const q = qrcode(0, 'M'); q.addData('TTmLZZWXF5vBggM6WEYzAMnppdMQiUhH2j'); q.make();
+function qr(id, text) {
+  try { const q = qrcode(0, 'M'); q.addData(text); q.make(); document.getElementById(id).innerHTML = q.createImgTag(6, 0); }
+  catch (e) { document.getElementById(id).hidden = true; }
+}
+qr('qr-pp', 'https://www.paypal.com/paypalme/vasyaberezin');
+qr('qr-usdt', 'TTmLZZWXF5vBggM6WEYzAMnppdMQiUhH2j');
+/* q.addData('TTmLZZWXF5vBggM6WEYzAMnppdMQiUhH2j'); q.make();
   document.getElementById('qr-usdt').innerHTML = q.createImgTag(6, 0);
-} catch (e) { document.getElementById('qr-usdt').hidden = true; }
+} catch (e) { document.getElementById('qr-usdt').hidden = true; } */
 </script>
 </body>
 </html>
